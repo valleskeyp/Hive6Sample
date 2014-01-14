@@ -1,0 +1,60 @@
+package com.valleskeyp.notificationsample;
+
+import com.valleskeyp.pickers.DatePickerFragment;
+import com.valleskeyp.pickers.TimePickerFragment;
+
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+import android.app.Activity;
+import android.app.DialogFragment;
+
+public class MainActivity extends Activity {
+	EditText eventInfo;
+	Button pickDateButton;
+	Button pickTimeButton;
+	Button submitButton;
+	
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        
+        eventInfo = (EditText)findViewById(R.id.eventInfo);
+        
+        pickDateButton = (Button)findViewById(R.id.selectDate);
+        pickTimeButton = (Button)findViewById(R.id.selectTime);
+        submitButton = (Button)findViewById(R.id.submit);
+        
+        pickDateButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Toast.makeText(getApplicationContext(), 
+			               "Set a date", Toast.LENGTH_LONG).show();
+			}
+        });
+
+        pickTimeButton.setOnClickListener(new OnClickListener() {
+
+        	@Override
+        	public void onClick(View v) {
+        		DialogFragment timeFragment = new TimePickerFragment();
+        		timeFragment.show(getFragmentManager(), "timePicker");
+        	}
+        });
+
+        submitButton.setOnClickListener(new OnClickListener() {
+
+        	@Override
+        	public void onClick(View v) {
+        		DialogFragment dateFragment = new DatePickerFragment();
+        	    dateFragment.show(getFragmentManager(), "datePicker");
+        	}
+        });
+    }
+    
+}

@@ -1,0 +1,17 @@
+package com.valleskeyp.notificationsample;
+
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.app.Activity;
+
+public class MainActivity extends FragmentActivity implements TimePickedListener {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        
+        
+    }
+    
+}
