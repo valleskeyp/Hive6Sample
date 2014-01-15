@@ -1,6 +1,9 @@
 package com.valleskeyp.notificationsample;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import com.valleskeyp.pickers.DatePickerFragment;
 import com.valleskeyp.pickers.TimePickerFragment;
@@ -14,7 +17,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.app.AlarmManager;
 import android.app.DialogFragment;
+import android.app.PendingIntent;
+import android.content.Intent;
 
 public class MainActivity extends FragmentActivity implements TimePickerFragment.TimePickedListener, DatePickerFragment.DatePickedListener {
 	EditText eventInfo;
@@ -32,7 +38,7 @@ public class MainActivity extends FragmentActivity implements TimePickerFragment
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
+
         eventInfo = (EditText)findViewById(R.id.eventInfo);
         dateField = (TextView)findViewById(R.id.dateField);
         timeField = (TextView)findViewById(R.id.timeField);
@@ -66,6 +72,26 @@ public class MainActivity extends FragmentActivity implements TimePickerFragment
         		if (eventInfo.length() > 0) {
 					if (dateField.length() > 0) {
 						if (timeField.length() > 0) {
+							SimpleDateFormat fmt = new SimpleDateFormat("MM/dd/yyyy h:mm a");
+							Calendar calendar = Calendar.getInstance();
+							try {
+								Date date = fmt.parse(setDate + " " + setTime);
+								calendar.setTime(date);
+							} catch (ParseException e) {
+								e.printStackTrace();
+							}
+							String event = eventInfo.getText().toString();
+							
+							AlarmManager aManager = (AlarmManager) getSystemService(ALARM_SERVICE);         
+							Intent intent = new Intent("com.valleskeyp.notificationsample.DisplayNotification");
+							intent.putExtra("event", event);
+							intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+							
+							PendingIntent displayIntent = PendingIntent.getActivity(getBaseContext(), 0, 
+									intent, 0);               
+							
+				            aManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), displayIntent);
+							
 							Toast.makeText(getApplicationContext(),
 									"Submitted event for: " + setDate + " " + setTime, Toast.LENGTH_SHORT)
 									.show();

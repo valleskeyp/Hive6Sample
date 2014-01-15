@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="11"
+        android:minSdkVersion="16"
         android:targetSdkVersion="17" />
 
     <application
@@ -20,6 +20,29 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <activity 
+            android:name=".notificationDetails" 
+            android:excludeFromRecents="true"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+            <intent-filter>
+                <action android:name="com.valleskeyp.notificationsample.notificationDetails" />
+                <category android:name="android.intent.category.DEFAULT" /> 
+            </intent-filter>
+        </activity>
+        
+        <activity 
+            android:name=".DisplayNotification" 
+            android:taskAffinity=""
+            android:excludeFromRecents="true">
+            <intent-filter>
+                <action android:name="com.valleskeyp.notificationsample.DisplayNotification" />
+                <category android:name="android.intent.category.DEFAULT" /> 
             </intent-filter>
         </activity>
     </application>

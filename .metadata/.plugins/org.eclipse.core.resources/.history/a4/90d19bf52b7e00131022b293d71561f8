@@ -1,0 +1,132 @@
+package com.valleskeyp.notificationsample;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+import com.valleskeyp.pickers.DatePickerFragment;
+import com.valleskeyp.pickers.TimePickerFragment;
+
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.text.format.DateFormat;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+import android.app.AlarmManager;
+import android.app.DialogFragment;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
+
+public class MainActivity extends FragmentActivity implements TimePickerFragment.TimePickedListener, DatePickerFragment.DatePickedListener {
+	EditText eventInfo;
+	TextView dateField;
+	TextView timeField;
+	
+	Button pickDateButton;
+	Button pickTimeButton;
+	Button submitButton;
+	
+	String setTime;
+	String setDate;
+	
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+      //---look up the notification manager service---
+        NotificationManager nm = (NotificationManager) 
+            getSystemService(NOTIFICATION_SERVICE);
+ 
+        //---cancel the notification---
+        nm.cancel(getIntent().getExtras().getInt("NotifID"));
+        eventInfo = (EditText)findViewById(R.id.eventInfo);
+        dateField = (TextView)findViewById(R.id.dateField);
+        timeField = (TextView)findViewById(R.id.timeField);
+        
+        pickDateButton = (Button)findViewById(R.id.selectDate);
+        pickTimeButton = (Button)findViewById(R.id.selectTime);
+        submitButton = (Button)findViewById(R.id.submit);
+        
+        pickDateButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				DialogFragment dateFragment = new DatePickerFragment();
+        	    dateFragment.show(getFragmentManager(), "datePicker");
+			}
+        });
+
+        pickTimeButton.setOnClickListener(new OnClickListener() {
+
+        	@Override
+        	public void onClick(View v) {
+        		DialogFragment timeFragment = new TimePickerFragment();
+        		timeFragment.show(getFragmentManager(), "timePicker");
+        	}
+        });
+
+        submitButton.setOnClickListener(new OnClickListener() {
+
+        	@Override
+        	public void onClick(View v) {
+        		if (eventInfo.length() > 0) {
+					if (dateField.length() > 0) {
+						if (timeField.length() > 0) {
+							SimpleDateFormat fmt = new SimpleDateFormat("MM/dd/yyyy h:mm a");
+							Calendar calendar = Calendar.getInstance();
+							try {
+								Date date = fmt.parse(setDate + " " + setTime);
+								calendar.setTime(date);
+							} catch (ParseException e) {
+								e.printStackTrace();
+							}
+							String event = eventInfo.getText().toString();
+							
+							AlarmManager aManager = (AlarmManager) getSystemService(ALARM_SERVICE);         
+							Intent intent = new Intent("com.valleskeyp.notificationsample.DisplayNotification");
+							intent.putExtra("event", event);
+							intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+							
+							PendingIntent displayIntent = PendingIntent.getActivity(getBaseContext(), 0, 
+									intent, 0);               
+							
+				            aManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), displayIntent);
+							
+							Toast.makeText(getApplicationContext(),
+									"Submitted event for: " + setDate + " " + setTime, Toast.LENGTH_SHORT)
+									.show();
+							eventInfo.setText("");
+							dateField.setText("");
+							timeField.setText("");
+						} else {
+							Toast.makeText(getApplicationContext(), "Please select a time",
+									Toast.LENGTH_SHORT).show();
+						}
+					} else {
+						Toast.makeText(getApplicationContext(), "Please select a date",
+								Toast.LENGTH_SHORT).show();
+					}
+				} else {
+					Toast.makeText(getApplicationContext(), "Please input event info",
+							Toast.LENGTH_SHORT).show();
+				}
+        	}
+        });
+    }
+    
+    public void onTimePicked(Calendar time) {
+    	setTime = (String) DateFormat.format("h:mm a", time);
+    	timeField.setText(DateFormat.format("h:mm a", time));
+    }
+    
+    public void onDatePicked(Calendar date) {
+    	setDate = (String) DateFormat.format("MM/dd/yyyy", date);
+    	dateField.setText(DateFormat.format("MM/dd/yyyy", date));
+    }
+}
