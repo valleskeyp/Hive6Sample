@@ -2,6 +2,8 @@ package com.valleskeyp.pickers;
 
 import java.util.Calendar;
 
+import com.valleskeyp.pickers.TimePickerFragment.TimePickedListener;
+
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -25,7 +27,7 @@ public class DatePickerFragment extends DialogFragment
 		try {
 			mListener = (DatePickedListener) activity;
 		} catch (ClassCastException e) {
-			throw new ClassCastException(activity.toString() + " must implement " + DatePickedListener.class.getName());
+			throw new ClassCastException(activity.toString() + " must implement " + TimePickedListener.class.getName());
 		}
 	}
 	

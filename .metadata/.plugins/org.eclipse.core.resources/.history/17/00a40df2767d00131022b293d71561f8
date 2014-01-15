@@ -1,0 +1,7 @@
+package com.valleskeyp.notificationsample;
+
+import java.util.Calendar;
+
+public interface TimePickedListener {
+	public void onTimePicked(Calendar time);
+}

@@ -2,6 +2,7 @@ package com.valleskeyp.notificationsample;
 
 import java.util.Calendar;
 
+import com.valleskeyp.pickers.DatePickedListener;
 import com.valleskeyp.pickers.DatePickerFragment;
 import com.valleskeyp.pickers.TimePickerFragment;
 
@@ -24,9 +25,6 @@ public class MainActivity extends FragmentActivity implements TimePickerFragment
 	Button pickDateButton;
 	Button pickTimeButton;
 	Button submitButton;
-	
-	String setTime;
-	String setDate;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +65,7 @@ public class MainActivity extends FragmentActivity implements TimePickerFragment
 					if (dateField.length() > 0) {
 						if (timeField.length() > 0) {
 							Toast.makeText(getApplicationContext(),
-									"Submitted event for: " + setDate + " " + setTime, Toast.LENGTH_SHORT)
+									"Submitted event", Toast.LENGTH_SHORT)
 									.show();
 							eventInfo.setText("");
 							dateField.setText("");
@@ -89,12 +87,10 @@ public class MainActivity extends FragmentActivity implements TimePickerFragment
     }
     
     public void onTimePicked(Calendar time) {
-    	setTime = (String) DateFormat.format("h:mm a", time);
     	timeField.setText(DateFormat.format("h:mm a", time));
     }
     
     public void onDatePicked(Calendar date) {
-    	setDate = (String) DateFormat.format("MM/dd/yyyy", date);
     	dateField.setText(DateFormat.format("MM/dd/yyyy", date));
     }
 }

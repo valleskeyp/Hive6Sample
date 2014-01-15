@@ -1,0 +1,7 @@
+package com.valleskeyp.pickers;
+
+import java.util.Calendar;
+
+public interface DatePickedListener {
+	public void onDatePicked(Calendar date);
+}

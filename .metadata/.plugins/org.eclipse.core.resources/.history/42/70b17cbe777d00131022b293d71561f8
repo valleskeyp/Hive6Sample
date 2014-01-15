@@ -67,7 +67,7 @@ public class MainActivity extends FragmentActivity implements TimePickerFragment
 					if (dateField.length() > 0) {
 						if (timeField.length() > 0) {
 							Toast.makeText(getApplicationContext(),
-									"Submitted event for: " + setDate + " " + setTime, Toast.LENGTH_SHORT)
+									"Submitted event for: ", Toast.LENGTH_SHORT)
 									.show();
 							eventInfo.setText("");
 							dateField.setText("");
