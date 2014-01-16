@@ -4,7 +4,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Random;
 
 import com.valleskeyp.pickers.DatePickerFragment;
 import com.valleskeyp.pickers.TimePickerFragment;
@@ -82,16 +81,13 @@ public class MainActivity extends FragmentActivity implements TimePickerFragment
 								e.printStackTrace();
 							}
 							String event = eventInfo.getText().toString();
-							Random random = new Random();
-							int ID = random.nextInt(10000000) + 1;
 							
 							AlarmManager aManager = (AlarmManager) getSystemService(ALARM_SERVICE);         
 							Intent intent = new Intent("com.valleskeyp.notificationsample.DisplayNotification");
 							intent.putExtra("event", event);
-							intent.putExtra("ID", ID);
-							intent.setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+							intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 							
-							PendingIntent displayIntent = PendingIntent.getActivity(getBaseContext(), ID, 
+							PendingIntent displayIntent = PendingIntent.getActivity(getBaseContext(), (int) System.currentTimeMillis(), 
 									intent, 0);               
 							
 				            aManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), displayIntent);

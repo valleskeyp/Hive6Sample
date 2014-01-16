@@ -89,10 +89,10 @@ public class MainActivity extends FragmentActivity implements TimePickerFragment
 							Intent intent = new Intent("com.valleskeyp.notificationsample.DisplayNotification");
 							intent.putExtra("event", event);
 							intent.putExtra("ID", ID);
-							intent.setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+							intent.setAction(ID+"");
 							
 							PendingIntent displayIntent = PendingIntent.getActivity(getBaseContext(), ID, 
-									intent, 0);               
+									intent, PendingIntent.FLAG_UPDATE_CURRENT);               
 							
 				            aManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), displayIntent);
 							
