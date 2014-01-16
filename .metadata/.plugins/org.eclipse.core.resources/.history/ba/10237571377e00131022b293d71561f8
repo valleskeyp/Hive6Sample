@@ -20,7 +20,7 @@ public class DisplayNotification extends Activity {
 		PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
 		PowerManager.WakeLock wakeLock = pm.newWakeLock(
 		        pm.SCREEN_DIM_WAKE_LOCK, "My wakelook");
-		wakeLock.acquire(5000);
+		wakeLock.acquire();
 		
 		Random random = new Random();
 		int ID = random.nextInt(10000000) + 1;
@@ -31,7 +31,7 @@ public class DisplayNotification extends Activity {
         i.putExtra("event", event);
         
         PendingIntent detailsIntent = PendingIntent.getActivity(this, ID, i, 0);
-
+ 
         NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         Notification.Builder builder = new Notification.Builder(this);
         builder.setContentIntent(detailsIntent)
@@ -42,8 +42,9 @@ public class DisplayNotification extends Activity {
         		.setContentTitle("Reminder!");
         Notification n = builder.build();
         
-        nm.notify(ID, n);
         wakeLock.release();
+        nm.notify(ID, n);
+        
         finish();
 	}
 }

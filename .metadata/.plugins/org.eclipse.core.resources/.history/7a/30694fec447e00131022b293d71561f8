@@ -87,7 +87,7 @@ public class MainActivity extends FragmentActivity implements TimePickerFragment
 							intent.putExtra("event", event);
 							intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 							
-							PendingIntent displayIntent = PendingIntent.getActivity(getBaseContext(), (int) System.currentTimeMillis(), 
+							PendingIntent displayIntent = PendingIntent.getActivity(getBaseContext(), 0, 
 									intent, 0);               
 							
 				            aManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), displayIntent);

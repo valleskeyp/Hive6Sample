@@ -36,17 +36,9 @@
             </intent-filter>
         </activity>
         
-        <activity 
-            android:name=".DisplayNotification" 
-            android:taskAffinity=""
-            android:excludeFromRecents="true"
-            android:theme="@android:style/Theme.NoDisplay"
-            >
-            <intent-filter>
-                <action android:name="com.valleskeyp.notificationsample.DisplayNotification" />
-                <category android:name="android.intent.category.DEFAULT" /> 
-            </intent-filter>
-        </activity>
+        <receiver 
+            android:name=".DisplayNotification" >
+        </receiver>
     </application>
 
 </manifest>

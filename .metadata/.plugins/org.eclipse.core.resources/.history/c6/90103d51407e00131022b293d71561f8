@@ -29,7 +29,7 @@ public class DisplayNotification extends Activity {
         Intent i = new Intent("com.valleskeyp.notificationsample.notificationDetails");
         i.putExtra("ID", ID);  
         i.putExtra("event", event);
-        
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         PendingIntent detailsIntent = PendingIntent.getActivity(this, ID, i, 0);
 
         NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);

@@ -31,7 +31,7 @@ public class DisplayNotification extends Activity {
         i.putExtra("event", event);
         
         PendingIntent detailsIntent = PendingIntent.getActivity(this, ID, i, 0);
-
+ 
         NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         Notification.Builder builder = new Notification.Builder(this);
         builder.setContentIntent(detailsIntent)
@@ -43,7 +43,7 @@ public class DisplayNotification extends Activity {
         Notification n = builder.build();
         
         nm.notify(ID, n);
-        wakeLock.release();
+        
         finish();
 	}
 }
